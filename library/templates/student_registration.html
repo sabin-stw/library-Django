@@ -97,10 +97,10 @@
 {% endblock %}
 {% block js %}
 <script>
-    // {% if alert %}
-    // alert("Registration Successfull.")
-    // document.location = "/student_login"
-    // {% endif %}
+    {% if alert %}
+    alert("Registration Successfull.")
+    document.location = "/student_login"
+    {% endif %}
 </script>
 {% endblock %}
 

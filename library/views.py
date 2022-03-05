@@ -80,17 +80,15 @@ def student_issued_books(request):
         books = Book.objects.filter(isbn=i.isbn)
         for book in books:
             t=(request.user.id, request.user.get_full_name, book.name,book.author)
-            li1.append(t)
-
         days=(date.today()-i.issued_date)
         d=days.days
         fine=0
         if d>15:
             day=d-14
             fine=day*5
-        t=(issuedBooks[0].issued_date, issuedBooks[0].expiry_date, fine)
-        li2.append(t)
-    return render(request,'student_issued_books.html',{'li1':li1, 'li2':li2})
+        t2=t+(issuedBooks[0].issued_date, issuedBooks[0].expiry_date, fine)
+        li1.append(t2)
+    return render(request,'student_issued_books.html',{'li1':li1})
 
 @login_required(login_url = '/student_login')
 def profile(request):
@@ -156,13 +154,12 @@ def student_registration(request):
         branch = request.POST['branch']
         classroom = request.POST['classroom']
         roll_no = request.POST['roll_no']
-        image = request.FILES['image']
         password = request.POST['password']
       
         user = User.objects.create_user(username=username, email=email, password=password,first_name=first_name, last_name=last_name)
         student = Student.objects.create(user=user, phone=phone, branch=branch, classroom=classroom,roll_no=roll_no)
-        user.save()
         student.save()
+        user.save()
         alert = True
         return render(request, "student_registration.html", {'alert':alert})
     return render(request, "student_registration.html")

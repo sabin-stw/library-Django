@@ -20,7 +20,6 @@ class Student(models.Model):
     branch = models.CharField(max_length=10)
     roll_no = models.CharField(max_length=3, blank=True)
     phone = models.CharField(max_length=10, blank=True)
-    # image = models.ImageField(upload_to="", blank=True)
 
     def __str__(self):
         return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.classroom)+']' + " ["+str(self.roll_no)+']'
