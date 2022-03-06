@@ -4,11 +4,59 @@
 {% block css %}
 {% endblock %}
 {% block body %}
-<div class="p-4 bg-light" style="background-image: url('/static/lib/lib1.jpg');">
-  <div class="container-fluid py-3">
-    <h1 class="display-5 fw-bold">Welcome to Library Management System</h1>
-    <p class="col-md-8 fs-4">System is under development Please proceed with admin login</p>
-    <a href="/admin_login/" class="btn btn-primary btn-lg">Admin Login</a>
+<link rel="stylesheet" type="text/css" href="/static/css/demo.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/style1.css" />
+<div id="page">
+  <ul class="cb-slideshow">
+    <li><span>Image 01</span>
+      <div>
+        <h3>Everything you need for better future and success has already been written. And guess what? All you have to
+          do is go to the library.</h3>
+      </div>
+    </li>
+    <li><span>Image 02</span>
+      <div>
+        <h3>A library is a place where you learn what teachers were afraid to teach you.</h3>
+      </div>
+    </li>
+    <li><span>Image 03</span>
+      <div>
+        <h3>Bad libraries build collections, good libraries build services, great libraries build communities.</h3>
+      </div>
+    </li>
+    <li><span>Image 04</span>
+      <div>
+        <h3>Libraries were full of ideas – perhaps the most dangerous and powerful of all weapons.</h3>
+      </div>
+    </li>
+    <li><span>Image 05</span>
+      <div>
+        <h3>I have always imagined that Paradise will be a kind of a Library.</h3>
+      </div>
+    </li>
+    <li><span>Image 06</span>
+      <div>
+        <h3>Without libraries what have we? We have no past and no future.</h3>
+      </div>
+    </li>
+  </ul>
+  <div class="card-container">
+    
+    <header>
+      <h1>WELCOME TO LIBRARY MANAGEMENT SYSTEM</h1>
+      <h2>This system is designed to manage all the functions of a library.<br />
+        It helps librarian to maintain the database of new books and the books that are borrowed by students along with
+        their due dates.<br />
+        This system completely automates all your library's activities.</h2>
+      <h3>Proceed to application with following navigations.</h3>
+      <p class="codrops-demos">
+        <a href="/admin_login">Admin Login</a>
+        <a href="/student_login">Student Login</a>
+        <a href="/student_registration">Register As Student</a>
+      </p>
+    </header>
+    <div class="special-card"></div>
   </div>
 </div>
+<!-- <script type="text/javascript" src="/static/js/modernizr.custom.86080.js"></script> -->
 {% endblock %}
