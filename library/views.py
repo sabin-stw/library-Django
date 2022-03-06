@@ -69,25 +69,62 @@ def view_issued_book(request):
             details.append(t)
     return render(request, "view_issued_book.html", {'issuedBooks':issuedBooks, 'details':details})
 
+@login_required(login_url = '/admin_login')
+def view_issued_book(request):
+    issuedBooks = IssuedBook.objects.all()
+    details = []
+    for i in issuedBooks:
+        days = (date.today()-i.issued_date)
+        d=days.days
+        fine=0
+        if d>14:
+            day=d-14
+            fine=day*5
+        books = list(models.Book.objects.filter(isbn=i.isbn))
+        students = list(models.Student.objects.filter(user=i.student_id))
+        j=0
+        for l in books:
+            t=(students[j].user,students[j].user_id,books[j].name,books[j].isbn,i.issued_date,i.expiry_date,fine,i.id)
+            j=j+1
+            details.append(t)
+    return render(request, "view_issued_book.html", {'details':details})
+
+@login_required(login_url = '/admin_login')
+def delete_issue(request, myid):
+    books = IssuedBook.objects.filter(id=myid)
+    books.delete()
+    return redirect("/view_issued_book")
+
+@login_required(login_url = '/admin_login')
+def delete_book(request, myid):
+    books = Book.objects.filter(id=myid)
+    books.delete()
+    return redirect("/view_books")
+
+@login_required(login_url = '/admin_login')
+def delete_student(request, myid):
+    students = Student.objects.filter(id=myid)
+    # students.user.delete()
+    students.delete()
+    return redirect("/view_students")
+
+
 @login_required(login_url = '/student_login')
 def student_issued_books(request):
     student = Student.objects.filter(user_id=request.user.id)
     issuedBooks = IssuedBook.objects.filter(student_id=student[0].user_id)
     li1 = []
-    li2 = []
-
     for i in issuedBooks:
-        books = Book.objects.filter(isbn=i.isbn)
-        for book in books:
-            t=(request.user.id, request.user.get_full_name, book.name,book.author)
         days=(date.today()-i.issued_date)
         d=days.days
         fine=0
         if d>15:
             day=d-14
             fine=day*5
-        t2=t+(issuedBooks[0].issued_date, issuedBooks[0].expiry_date, fine)
-        li1.append(t2)
+        books = Book.objects.filter(isbn=i.isbn)
+        for book in books:
+            t=(request.user.id, request.user.get_full_name, book.name,book.author,issuedBooks[0].issued_date, issuedBooks[0].expiry_date, fine)
+            li1.append(t)
     return render(request,'student_issued_books.html',{'li1':li1})
 
 @login_required(login_url = '/student_login')
@@ -115,17 +152,8 @@ def edit_profile(request):
         return render(request, "edit_profile.html", {'alert':alert})
     return render(request, "edit_profile.html")
 
-def delete_book(request, myid):
-    books = Book.objects.filter(id=myid)
-    books.delete()
-    return redirect("/view_books")
 
-def delete_student(request, myid):
-    students = Student.objects.filter(id=myid)
-    students.user.delete()
-    students.delete()
-    return redirect("/view_students")
-
+@login_required(login_url = '/student_login')
 def change_password(request):
     if request.method == "POST":
         current_password = request.POST['current_password']

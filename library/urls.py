@@ -18,6 +18,7 @@ urlpatterns = [
     path("admin_login/", views.admin_login, name="admin_login"),
     path("logout/", views.Logout, name="logout"),
 
+    path("delete_issue/<int:myid>/", views.delete_issue, name="delete_issue"),
     path("delete_book/<int:myid>/", views.delete_book, name="delete_book"),
     path("delete_student/<int:myid>/", views.delete_student, name="delete_student"),
 ]
